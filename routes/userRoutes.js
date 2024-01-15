@@ -8,11 +8,11 @@ router.post('/register',userRegister);
 router.post('/login',userLogin);
 router.get('/admin/dashboard',isAuth,isAdmin,userProfile)
 router.get('/user-profile', isAuth, userProfile); 
-router.get('/users', findAllUsers);
-router.get('/users/:id', findUserById);
-router.delete('/users/:id', deleteUser);
-router.put('/users/:id', updateUser);
-router.post('/users/:id/deposit', depositUser);
+router.get('/', findAllUsers);
+router.get('/:id', findUserById);
+router.delete('/:id', deleteUser);
+router.put('/:id', updateUser);
+router.post('/:id/deposit', depositUser);
 
 
 export default router;
