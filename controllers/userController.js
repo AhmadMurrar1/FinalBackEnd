@@ -24,7 +24,7 @@ export async function userRegister(req, res, next) {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Create a new user
-        const newUser = await User.create({ email, password: hashedPassword, username });
+        const newUser = await User.create({ email, password: hashedPassword, username,listOfGames: [] });
         res.status(201).send(newUser);
     } catch (error) {
         next(error);
@@ -153,7 +153,7 @@ export async function deleteUser(req, res, next) {
 
 export async function updateUser(req, res, next) {
     const userId = req.params.id; 
-    const { username, email, password } = req.body;
+    const { username, email, password,cash,credits,listOfGames } = req.body;
     try {
         // Find the user by ID
         const user = await User.findById(userId);
@@ -163,7 +163,12 @@ export async function updateUser(req, res, next) {
             res.status(404);
             throw new Error('User not found');
         }
-
+        if(cash){
+            user.cash = cash;
+        }
+        if(credits){
+            user.credits=credits;
+        }
         // Update user properties if provided in the request body
         if (username) {
             user.username = username;
@@ -175,7 +180,9 @@ export async function updateUser(req, res, next) {
             const hashedPassword = await bcrypt.hash(password, 10);
             user.password = hashedPassword;
         }
-
+        if(listOfGames) {
+            user.listOfGames = listOfGames;
+        }
         // Validate and save the updated user
         await user.validate();
         await user.save();
