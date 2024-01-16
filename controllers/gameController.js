@@ -163,7 +163,6 @@ export async function purchaseGame(req, res, next) {
         await user.save();
         await game.save();
 
-        // Optionally, you can return information about the purchased game or the user
         res.json({ user, purchasedGame: game });
     } catch (error) {
         console.error('Purchase failed:', error.message);
