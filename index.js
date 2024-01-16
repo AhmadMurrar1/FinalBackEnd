@@ -9,7 +9,11 @@ import cors from 'cors';
 dotenv.config();
 const server = express();
 server.use(express.json());
-server.use(cors());
+server.use(cors({
+    origin: 'http://localhost:5173', 
+    credentials: true, 
+  }));
+  
 server.use('/api/games', gameRoutes);
 server.use('/api/users',userRoutes);
 server.use(errorHandler)
