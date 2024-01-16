@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { deleteUser, depositUser, findAllUsers, findUserById, updateUser, userLogin,userProfile,userRegister } from "../controllers/userController.js";
+import { deleteUser, depositUser, findAllUsers, findUserById, updateUser, userLogin,userLogout,userProfile,userRegister } from "../controllers/userController.js";
 import { isAdmin,isAuth } from "../middleware/auth.js";
 
 const router = Router();
@@ -13,6 +13,8 @@ router.get('/:id', findUserById);
 router.delete('/:id', deleteUser);
 router.put('/:id', updateUser);
 router.post('/:id/deposit', depositUser);
+router.post('/logout', userLogout);
+
 
 
 export default router;

@@ -241,3 +241,14 @@ export async function depositUser(req, res, next) {
         }
     }
 }
+
+export const userLogout = (req, res) => {
+    try {
+      // Clear the authentication-related data (cookie, session, etc.)
+      res.clearCookie('authToken'); // Clear the auth cookie
+      res.status(200).json({ message: 'Logout successful' });
+    } catch (error) {
+      console.error('Logout failed:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
