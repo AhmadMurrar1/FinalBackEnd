@@ -5,7 +5,7 @@ import gameRoutes from './routes/gameRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import cors from 'cors';
-
+import cookieParser from 'cookie-parser';
 dotenv.config();
 const server = express();
 server.use(express.json());
@@ -13,7 +13,8 @@ server.use(cors({
     origin: 'http://localhost:5173', 
     credentials: true, 
   }));
-  
+server.use(cookieParser());
+
 server.use('/api/games', gameRoutes);
 server.use('/api/users',userRoutes);
 server.use(errorHandler)
