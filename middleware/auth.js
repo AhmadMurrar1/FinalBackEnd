@@ -21,7 +21,7 @@ export const isAuth = async (req, res, next) => {
                 console.log(`Decoded token: ${JSON.stringify(decoded)}`);
                 const { id } = decoded;
 
-                User.findById(id)
+               const user =  User.findById(id)
                     .then(user => {
                         if (!user) {
                             console.error(`User not found with ID: ${id}`);
@@ -35,6 +35,7 @@ export const isAuth = async (req, res, next) => {
                         console.error(`Error finding user by ID: ${err.message}`);
                         return res.status(500).send('Internal Server Error');
                     });
+                    console.log(user);
             });
         } else {
             next();
