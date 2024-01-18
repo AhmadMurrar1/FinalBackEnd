@@ -209,16 +209,3 @@ export async function refundGame(req, res, next) {
     }
 }
 
-export const findGamesByNames = async (req, res, next) => {
-    try {
-        const gameNames = req.body.names; // Expect an array of game names
-        const games = await Game.find({ name: { $in: gameNames } });
-
-        if (!games.length) {
-            return res.status(404).json({ message: 'No games found' });
-        }
-        res.status(200).json(games);
-    } catch (error) {
-        next(error);
-    }
-};

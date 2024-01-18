@@ -3,7 +3,6 @@ import { Router } from 'express';
 import {
     createGame,
     deleteGame,
-    findGamesByNames,
     gameAds,
     gameGiveaway,
     getAGameById,
@@ -24,6 +23,5 @@ router.get('/adds', gameAds);
 router.get('/giveaway', gameGiveaway);
 router.post('/:id/purchase', purchaseGame);
 router.post('/refund/:id', refundGame);
-router.post('/bynames', findGamesByNames);
 
 export default router;

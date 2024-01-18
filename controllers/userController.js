@@ -79,21 +79,23 @@ export async function userLogin(req, res, next) {
 
 export const userProfile = async (req, res, next) => {
     try {
-        // Check if user data is attached to the request object (set by isAuth middleware)
         if (!req.user) {
             res.status(401);
             throw new Error('User not authenticated');
         }
 
-        // Fetch user details from req.user
-        const { _id, username, email, role } = req.user;
+        const { _id, username, email, role, listOfGames } = req.user;
 
-        // Send the user profile data as a response
+        // Fetch game details for each game in listOfGames
+        const gameDetails = await Game.find({ name: { $in: listOfGames } });
+
+        // Send the user profile data with game details as a response
         res.json({
             id: _id,
             username,
             email,
             role,
+            listOfGames: gameDetails, // Replace the list of game names with actual game details
         });
     } catch (error) {
         next(error);
