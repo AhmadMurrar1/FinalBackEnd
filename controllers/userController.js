@@ -63,7 +63,7 @@ export async function userLogin(req, res, next) {
             });
 
             // Set the token as an HTTP-only cookie
-            res.cookie('authToken', token, { maxAge: 90000000, httpOnly: true });
+            res.cookie('authToken', token, { maxAge: 900000000, httpOnly: true });
 
             // Send the user ID along with the token in the response
             res.status(200).json({ token, userId: existingUser._id });
