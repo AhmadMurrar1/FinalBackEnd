@@ -85,7 +85,7 @@ export const userProfile = async (req, res, next) => {
             throw new Error('User not authenticated');
         }
 
-        const { _id, username, email, role, listOfGames } = req.user;
+        const { _id, username, email, role, listOfGames,cash,credits } = req.user;
 
         // Fetch game details for each game in listOfGames
         const gameDetails = await Game.find({ name: { $in: listOfGames } });
