@@ -23,27 +23,10 @@ const gameSchema = new mongoose.Schema({
         unique: true,
         trim: true,
         lowercase: true,
-        validate: {
-            validator: function (value) {
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                return emailRegex.test(value);
-            },
-            message: 'Invalid email format',
-        },
     },
     password: {
         type: String,
         required: true,
-        minlength: 8,
-        validate: {
-            validator: function (value) {
-                // Validate password complexity
-                const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-                return passwordRegex.test(value);
-            },
-            message:
-                'Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character (@ $ ! % * ? &)',
-        }
     },
     price: {
         type: Number, 
