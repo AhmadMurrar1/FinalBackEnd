@@ -274,3 +274,63 @@ export const userLogout = (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   };
+
+  // Add a game to the user's cart
+export async function addToCart(req, res, next) {
+    const { userId, gameId } = req.body;
+
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            res.status(404).send('User not found');
+            return;
+        }
+
+        // Avoid adding duplicate game IDs
+        if (!user.cart.includes(gameId)) {
+            user.cart.push(gameId);
+            await user.save();
+        }
+
+        res.status(200).json(user.cart);
+    } catch (error) {
+        next(error);
+    }
+}
+
+// Remove a game from the user's cart
+export async function removeFromCart(req, res, next) {
+    const { userId, gameId } = req.body;
+
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            res.status(404).send('User not found');
+            return;
+        }
+
+        user.cart = user.cart.filter(id => id.toString() !== gameId);
+        await user.save();
+
+        res.status(200).json(user.cart);
+    } catch (error) {
+        next(error);
+    }
+}
+
+// Get the user's cart
+export async function getCart(req, res, next) {
+    const { userId } = req.params;
+
+    try {
+        const user = await User.findById(userId).populate('cart');
+        if (!user) {
+            res.status(404).send('User not found');
+            return;
+        }
+
+        res.status(200).json(user.cart);
+    } catch (error) {
+        next(error);
+    }
+}

@@ -39,7 +39,10 @@ const userSchema = mongoose.Schema({
     listOfGames: {
         type: [String],
         default: []
-    }
+    }, cart: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Gameo' 
+    }]
 });
 
 const User = mongoose.model('Usero', userSchema);
