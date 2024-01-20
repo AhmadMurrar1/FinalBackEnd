@@ -96,7 +96,9 @@ export const userProfile = async (req, res, next) => {
             username,
             email,
             role,
-            listOfGames: gameDetails, // Replace the list of game names with actual game details
+            listOfGames: gameDetails,
+            cash,
+            credits // Replace the list of game names with actual game details
         });
     } catch (error) {
         next(error);
