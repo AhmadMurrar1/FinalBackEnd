@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addToCart, deleteUser, depositUser, findAllUsers, findUserById, getCart, removeFromCart, updateUser, userLogin,userLogout,userProfile,userRegister, validateToken } from "../controllers/userController.js";
+import { addToCart, deleteUser, depositUser, findAllUsers, findUserById, getCart, purchaseRentPro, removeFromCart, updateUser, userLogin,userLogout,userProfile,userRegister, validateToken } from "../controllers/userController.js";
 import { isAdmin,isAuth } from "../middleware/auth.js";
 
 const router = Router();
@@ -18,6 +18,7 @@ router.get('/validate-token', validateToken);
 router.post('/add-to-cart', addToCart);
 router.post('/remove-from-cart', removeFromCart);
 router.get('/:userId/cart', getCart);
+router.post('/purchase-rentpro', purchaseRentPro);
 
 
 export default router;

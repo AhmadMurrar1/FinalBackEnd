@@ -336,3 +336,42 @@ export async function getCart(req, res, next) {
         next(error);
     }
 }
+
+// In your userController.js or a relevant controller file
+
+export async function purchaseRentPro(req, res) {
+    const { userId } = req.body;
+    const rentProCost = 100; // Define cost
+
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+
+        // Check if the user has enough cash or credits
+        if (user.cash + user.credits < rentProCost) {
+            return res.status(400).send('Insufficient funds for RentPro');
+        }
+
+        // Deduct the amount from cash first, then credits if necessary
+        let remainingCost = rentProCost;
+        if (user.cash >= rentProCost) {
+            user.cash -= rentProCost;
+        } else {
+            remainingCost -= user.cash;
+            user.cash = 0;
+            user.credits -= remainingCost;
+        }
+
+        // Add all games to user's library
+        const allGames = await Game.find().select('_id'); 
+        user.listOfGames = [...new Set([...user.listOfGames, ...allGames.map(game => game._id.toString())])];
+
+        await user.save();
+        res.status(200).json({ message: 'RentPro purchase successful', user });
+    } catch (error) {
+        console.error('Error in purchaseRentPro:', error);
+        res.status(500).send('Internal Server Error');
+    }
+}

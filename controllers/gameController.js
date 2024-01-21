@@ -200,7 +200,7 @@ export async function refundGame(req, res, next) {
 
         // Save changes
         await user.save();
-
+        await Game.save();
         // Optionally, you can return information about the refunded game or the user
         res.json({ user, refundedGame: game });
     } catch (error) {
