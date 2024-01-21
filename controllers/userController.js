@@ -341,7 +341,7 @@ export async function getCart(req, res, next) {
 
 export async function purchaseRentPro(req, res) {
     const { userId } = req.body;
-    const rentProCost = 100; // Define cost
+    const rentProCost = 100;
 
     try {
         const user = await User.findById(userId);
@@ -355,18 +355,17 @@ export async function purchaseRentPro(req, res) {
         }
 
         // Deduct the amount from cash first, then credits if necessary
-        let remainingCost = rentProCost;
         if (user.cash >= rentProCost) {
             user.cash -= rentProCost;
         } else {
-            remainingCost -= user.cash;
+            let remainingCost = rentProCost - user.cash;
             user.cash = 0;
             user.credits -= remainingCost;
         }
 
-        // Add all games to user's library
-        const allGames = await Game.find().select('_id'); 
-        user.listOfGames = [...new Set([...user.listOfGames, ...allGames.map(game => game._id.toString())])];
+        // Add all games by name to user's library
+        const allGames = await Game.find().select('name'); 
+        user.listOfGames = [...new Set([...user.listOfGames, ...allGames.map(game => game.name)])];
 
         await user.save();
         res.status(200).json({ message: 'RentPro purchase successful', user });
