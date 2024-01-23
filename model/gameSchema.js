@@ -10,23 +10,13 @@ const gameSchema = new mongoose.Schema({
     listOfGames: {
         type: [String],
         required: true,
+        default:[],
         validate: {
             validator: function (value) {
                 return new Set(value).size === value.length;
             },
             message: 'List of games must have unique values',
         },
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-        trim: true,
-        lowercase: true,
-    },
-    password: {
-        type: String,
-        required: true,
     },
     price: {
         type: Number, 

@@ -80,11 +80,11 @@ export async function deleteGame(req, res, next) {
 }
 
 export async function createGame(req, res, next) {
-    const { name, listOfGames, email, password, price, url } = req.body;
+    const { name, price, url } = req.body;
 
     console.log('Received request body:', req.body);
 
-    if (!name || !Array.isArray(listOfGames) || listOfGames.length === 0 || !email || !password || !price || !url) {
+    if (!name ||  !price || !url) {
         res.status(400).send('All fields are required');
         return;
     }
@@ -99,9 +99,6 @@ export async function createGame(req, res, next) {
 
         const newGame = await Game.create({
             name,
-            listOfGames,
-            email,
-            password,
             price,
             url,
         });
