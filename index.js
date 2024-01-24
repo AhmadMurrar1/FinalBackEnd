@@ -10,7 +10,6 @@ dotenv.config();
 const server = express();
 server.use(express.json());
 server.use(cors({
-    origin: ['http://localhost:5173','https://rentgamefinal.netlify.app/','rentgamefinal.netlify.app/'], 
     credentials: true, 
   }));
 server.use(cookieParser());
