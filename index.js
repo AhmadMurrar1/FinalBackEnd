@@ -6,12 +6,16 @@ import userRoutes from './routes/userRoutes.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+const allowedOrigins = ['http://localhost:5173', 'https://gamerentfinal.netlify.app/','gamerentfinal.netlify.app/'];
+
+const corsOptions = {
+  origin: allowedOrigins,
+  credentials: true,
+};
 dotenv.config();
 const server = express();
 server.use(express.json());
-server.use(cors({
-    credentials: true, 
-  }));
+server.use(cors(corsOptions));
 server.use(cookieParser());
 
 server.use('/api/games', gameRoutes);
