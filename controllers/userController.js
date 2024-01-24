@@ -20,12 +20,15 @@ export async function userRegister(req, res, next) {
             res.status(409);
             throw new Error('A user with the same username or email already exists');
         }
-
+        if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/.test(password)) {
+            res.status(400);
+            throw new Error('Password must contain at least one uppercase letter, one lowercase letter, one digit, and be at least 6 characters long');
+        }
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Create a new user
-        const newUser = await User.create({ email, password: hashedPassword, username,listOfGames: [] });
+        const newUser = await User.create({ email, password: hashedPassword, username, listOfGames: [] });
         res.status(201).send(newUser);
     } catch (error) {
         next(error);
