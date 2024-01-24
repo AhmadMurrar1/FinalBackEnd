@@ -34,7 +34,7 @@ const userSchema = mongoose.Schema({
     },
     credits:{
         type: Number,
-        default: 0
+        default: 150
     },
     listOfGames: {
         type: [String],
